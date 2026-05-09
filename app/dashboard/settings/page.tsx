@@ -10,11 +10,11 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FieldGroup, Field, FieldLabel, FieldDescription } from "@/components/ui/field"
 import { Badge } from "@/components/ui/badge"
-import { getUserProfile, updateAccount, type UserProfile } from "@/lib/api"
+import { getAccount, updateAccount, type Account } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
 
-// Preload profile data fetcher
-const profileFetcher = (key: [string, string]) => getUserProfile(key[1])
+// Preload account data fetcher
+const accountFetcher = (key: [string, string]) => getAccount(key[1])
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -23,20 +23,18 @@ export default function SettingsPage() {
   // Preload data on component mount
   useEffect(() => {
     if (userId) {
-      preload(['profile', userId], profileFetcher)
+      preload(['account', userId], accountFetcher)
     }
   }, [userId])
   
-  const { data: profileData, isLoading: isProfileLoading, mutate } = useSWR(
-    userId ? ['profile', userId] : null,
-    profileFetcher,
+  const { data: profile, isLoading: isProfileLoading, mutate } = useSWR(
+    userId ? ['account', userId] : null,
+    accountFetcher,
     { 
       revalidateOnFocus: false,
       dedupingInterval: 5000
     }
   )
-  
-  const profile = profileData?.data
   
   const [formData, setFormData] = useState({
     full_name: "",
@@ -62,7 +60,7 @@ export default function SettingsPage() {
       setFormData({
         full_name: profile.full_name || "",
         email: profile.email || "",
-        phone: profile.phone || "",
+        phone: String(profile.phone || ""),
         company_name: profile.company_name || "",
         avatar_url: profile.avatar_url || "",
       })
