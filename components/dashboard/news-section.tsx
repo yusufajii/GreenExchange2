@@ -37,14 +37,14 @@ export function NewsSection({ news, isLoading }: NewsSectionProps) {
   }
 
   return (
-    <Card className="h-full bg-card border-border">
-      <CardHeader className="pb-3">
+    <Card className="h-full bg-card border-border flex flex-col overflow-hidden">
+      <CardHeader className="pb-3 flex-shrink-0">
         <CardTitle className="flex items-center gap-2 text-foreground">
           <Newspaper className="h-5 w-5 text-primary" />
           Latest News
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 max-h-96 overflow-y-auto">
+      <CardContent className="flex-1 space-y-4 overflow-y-auto min-h-0">
         {news.length === 0 ? (
           <p className="text-center text-muted-foreground py-8">No news available</p>
         ) : (

@@ -6,8 +6,18 @@ export interface User {
 }
 
 export interface Account {
+  user_id: string
   cash_balance: number
-  blocked_balance: number
+  blocked_cash: number
+  blocked_balance?: number // Legacy alias
+  full_name: string
+  email: string
+  phone: string
+  avatar_url: string
+  status: string
+  kyc_status: string
+  joined_at: string
+  company_name: string
 }
 
 export interface Symbol {
@@ -149,7 +159,15 @@ export async function login(username: string, password: string): Promise<{ succe
 }
 
 export async function getAccount(userId: string): Promise<Account | null> {
-  return callApi<Account>('get_account', { user_id: userId })
+  const res = await callApi<{ success: boolean; data: Account }>('get_account', { user_id: userId })
+  if (res && res.success && res.data) {
+    // Map blocked_cash to blocked_balance for backwards compatibility
+    return {
+      ...res.data,
+      blocked_balance: res.data.blocked_cash
+    }
+  }
+  return null
 }
 
 export async function getMarket(): Promise<Symbol[] | null> {

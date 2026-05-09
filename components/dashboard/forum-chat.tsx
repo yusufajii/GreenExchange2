@@ -1,13 +1,14 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import useSWR from "swr"
 import { MessageCircle, Send, User } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { getForum, postForum, type ForumMessage } from "@/lib/api"
+import { getForum, postForum, getAccount, type ForumMessage } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
 
 interface ForumChatProps {
@@ -19,6 +20,12 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
   const [message, setMessage] = useState("")
   const [isSending, setIsSending] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  // Fetch current user's account for avatar
+  const { data: account } = useSWR(
+    userId ? ['account', userId] : null,
+    () => getAccount(userId!)
+  )
 
   const { data: forumData, mutate } = useSWR(
     'forum',
@@ -63,15 +70,15 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
   }
 
   return (
-    <Card className="h-full bg-card border-border flex flex-col">
+    <Card className="h-full bg-card border-border flex flex-col overflow-hidden">
       <CardHeader className="pb-3 flex-shrink-0">
         <CardTitle className="flex items-center gap-2 text-foreground">
           <MessageCircle className="h-5 w-5 text-primary" />
           Community Chat
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col min-h-0">
-        <ScrollArea className="flex-1 pr-4" ref={scrollRef}>
+      <CardContent className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        <ScrollArea className="flex-1 pr-4 min-h-0" ref={scrollRef}>
           <div className="space-y-3 pb-2">
             {messages.length === 0 ? (
               <p className="text-center text-muted-foreground py-8 text-sm">No messages yet. Start the conversation!</p>
@@ -81,8 +88,18 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
                   key={`${msg.user_id}-${msg.time}-${index}`}
                   className={`flex gap-2 ${msg.user_id === userId ? 'flex-row-reverse' : ''}`}
                 >
-                  <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
-                    <User className="h-3.5 w-3.5 text-muted-foreground" />
+                  <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center flex-shrink-0 overflow-hidden relative">
+                    {msg.user_id === userId && account?.avatar_url ? (
+                      <Image
+                        src={account.avatar_url}
+                        alt="Your avatar"
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    ) : (
+                      <User className="h-3.5 w-3.5 text-muted-foreground" />
+                    )}
                   </div>
                   <div className={`max-w-[75%] ${msg.user_id === userId ? 'items-end' : 'items-start'}`}>
                     <div

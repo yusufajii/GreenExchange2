@@ -130,10 +130,45 @@ export default function SettingsPage() {
     }
   }
 
-  if (isProfileLoading) {
+  // Show skeleton loading state while data is being fetched
+  if (isProfileLoading || !isInitialized) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="p-4 lg:p-6 max-w-4xl mx-auto space-y-6">
+        {/* Header Skeleton */}
+        <div>
+          <div className="h-8 w-48 bg-secondary rounded animate-pulse" />
+          <div className="h-4 w-64 bg-secondary rounded animate-pulse mt-2" />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {/* Profile Summary Skeleton */}
+          <Card className="bg-card border-border md:col-span-1">
+            <CardContent className="pt-6">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 rounded-full bg-secondary animate-pulse" />
+                <div className="h-5 w-32 bg-secondary rounded animate-pulse mt-4" />
+                <div className="h-4 w-24 bg-secondary rounded animate-pulse mt-2" />
+                <div className="h-6 w-20 bg-secondary rounded animate-pulse mt-3" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Form Skeleton */}
+          <Card className="bg-card border-border md:col-span-2">
+            <CardHeader>
+              <div className="h-6 w-40 bg-secondary rounded animate-pulse" />
+              <div className="h-4 w-48 bg-secondary rounded animate-pulse mt-1" />
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="space-y-2">
+                  <div className="h-4 w-24 bg-secondary rounded animate-pulse" />
+                  <div className="h-10 w-full bg-secondary rounded animate-pulse" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     )
   }

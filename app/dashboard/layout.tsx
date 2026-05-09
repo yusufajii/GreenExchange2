@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/lib/auth-store"
 import { DashboardHeader } from "@/components/dashboard/header"
 import { DashboardNav } from "@/components/dashboard/nav"
@@ -12,7 +12,6 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const router = useRouter()
-  const pathname = usePathname()
   const { isAuthenticated, userId } = useAuthStore()
 
   useEffect(() => {
@@ -21,12 +20,7 @@ export default function DashboardLayout({
     }
   }, [isAuthenticated, userId, router])
 
-  // Redirect /dashboard to /dashboard/fyp (Home)
-  useEffect(() => {
-    if (pathname === "/dashboard") {
-      router.replace("/dashboard/fyp")
-    }
-  }, [pathname, router])
+
 
   if (!isAuthenticated || !userId) {
     return (
