@@ -98,14 +98,14 @@ function MessageItem({
             "text-sm truncate",
             isUnread ? "font-semibold text-foreground" : "text-muted-foreground"
           )}>
-            {truncateText(message.subject, 60)}
+            {truncateText(message.subject, 50)}
           </span>
           {isUnread && (
             <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
           )}
         </div>
         <p className="text-xs text-muted-foreground truncate mt-0.5">
-          {truncateText(message.message, 80)}
+          {truncateText(message.message, 70)}
         </p>
         <div className="flex items-center gap-2 mt-1">
           <Badge variant="outline" className="text-[10px] px-1.5 py-0">
