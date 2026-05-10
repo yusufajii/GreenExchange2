@@ -11,7 +11,19 @@ const HERO_IMAGE = "/thumbnail.png"
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Background Image */}
+      <div className="fixed inset-0 -z-10">
+        <Image
+          src="https://www.dbs.id/id/iwov-resources/images/blog/livebetter-article-2024-4-banner-1404x630.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Semi-blur overlay */}
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+      </div>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
