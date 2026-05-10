@@ -20,12 +20,24 @@ export function TrendingTicker({ symbols, onSymbolClick, onCertificationClick }:
 
   return (
     <div className="overflow-hidden bg-card border border-border rounded-lg">
+      <style>{`
+        @keyframes ticker {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
       <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-secondary/30">
         <TrendingUp className="h-4 w-4 text-primary" />
         <span className="text-sm font-medium text-foreground">Trending Symbols</span>
       </div>
       <div className="relative overflow-hidden">
-        <div className="flex animate-ticker">
+        <div
+          className="flex"
+          style={{
+            animation: "ticker 50s linear infinite",
+            width: "max-content",
+          }}
+        >
           {duplicatedSymbols.map((symbol, index) => (
             <div
               key={`${symbol.symbol}-${index}`}

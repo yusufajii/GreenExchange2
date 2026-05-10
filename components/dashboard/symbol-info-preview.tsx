@@ -14,7 +14,9 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getSymbolInfo, type SymbolInfo } from "@/lib/api"
+// SESUDAH
 import { cn } from "@/lib/utils"
+import { CertificationBadge } from "@/components/dashboard/certification-badge"
 
 interface SymbolInfoPreviewProps {
   symbol: string
@@ -104,7 +106,7 @@ export function SymbolInfoPreview({ symbol, children }: SymbolInfoPreviewProps) 
                 </div>
                 <div className="flex items-center gap-1.5 text-muted-foreground">
                   <Award className="h-3 w-3" />
-                  <span>{info.certification}</span>
+                  <CertificationBadge certification={info.certification} />
                 </div>
                 <div className="flex items-center gap-1.5 text-muted-foreground">
                   <Building2 className="h-3 w-3" />

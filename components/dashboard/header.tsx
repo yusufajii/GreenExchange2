@@ -15,25 +15,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuthStore } from "@/lib/auth-store"
-import { getAccount, getUserProfile } from "@/lib/api"
+import { getAccount } from "@/lib/api"
 import { InboxButton } from "./inbox"
 
 export function DashboardHeader() {
   const router = useRouter()
   const { userId, logout } = useAuthStore()
 
-  const { data: account } = useSWR(
+  const { data: account, isLoading: isAccountLoading } = useSWR(
     userId ? ['account', userId] : null,
     () => getAccount(userId!),
     { refreshInterval: 5000 }
   )
-
-  const { data: profileData } = useSWR(
-    userId ? ['profile', userId] : null,
-    () => getUserProfile(userId!)
-  )
-  
-  const profile = profileData?.data
 
   const handleLogout = () => {
     logout()
@@ -79,9 +72,11 @@ export function DashboardHeader() {
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
             >
               <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center overflow-hidden relative">
-                {profile?.avatar_url ? (
+                {isAccountLoading ? (
+                  <div className="animate-pulse w-full h-full bg-secondary" />
+                ) : account?.avatar_url ? (
                   <Image 
-                    src={profile.avatar_url} 
+                    src={account.avatar_url} 
                     alt="Avatar" 
                     fill
                     className="object-cover"
@@ -92,7 +87,7 @@ export function DashboardHeader() {
                 )}
               </div>
               <span className="hidden md:block text-sm font-medium text-foreground">
-                {profile?.full_name || profile?.username || "User"}
+                {isAccountLoading ? "..." : (account?.full_name || "User")}
               </span>
               <ChevronDown className="h-4 w-4 hidden md:block" />
             </Button>
@@ -100,8 +95,8 @@ export function DashboardHeader() {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium">{profile?.full_name || "User"}</p>
-                <p className="text-xs text-muted-foreground">{profile?.email || `@${profile?.username}`}</p>
+                <p className="text-sm font-medium">{account?.full_name || "User"}</p>
+                <p className="text-xs text-muted-foreground">{account?.email || ""}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

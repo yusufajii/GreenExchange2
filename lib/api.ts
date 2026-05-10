@@ -6,8 +6,18 @@ export interface User {
 }
 
 export interface Account {
+  user_id: string
   cash_balance: number
-  blocked_balance: number
+  blocked_cash: number
+  blocked_balance?: number // Legacy alias
+  full_name: string
+  email: string
+  phone: string
+  avatar_url: string
+  status: string
+  kyc_status: string
+  joined_at: string
+  company_name: string
 }
 
 export interface Symbol {
@@ -149,7 +159,16 @@ export async function login(username: string, password: string): Promise<{ succe
 }
 
 export async function getAccount(userId: string): Promise<Account | null> {
-  return callApi<Account>('get_account', { user_id: userId })
+  // API returns account data directly at root level (not wrapped in 'data')
+  const res = await callApi<Account & { success: boolean }>('get_account', { user_id: userId })
+  if (res && res.success) {
+    // Map blocked_cash to blocked_balance for backwards compatibility
+    return {
+      ...res,
+      blocked_balance: res.blocked_cash
+    }
+  }
+  return null
 }
 
 export async function getMarket(): Promise<Symbol[] | null> {
@@ -321,17 +340,19 @@ export interface GoogleLoginPayload {
 }
 
 export interface UserProfile {
-  user_id: string
-  username: string
+  user_id: number | string
+  username?: string
   full_name: string
   email: string
-  phone: string
+  phone: number | string
   avatar_url: string
   status: string
   kyc_status: string
   company_name: string
   cash_balance: number
-  blocked_balance: number
+  blocked_cash: number
+  blocked_balance?: number
+  joined_at?: string
 }
 
 export interface AccountResponse {
@@ -362,8 +383,12 @@ export async function googleLogin(data: GoogleLoginPayload): Promise<{ success: 
 }
 
 export async function getUserProfile(userId: string): Promise<ProfileResponse> {
-  const res = await callApi<ProfileResponse>('get_user_profile', { user_id: userId })
-  return res || { success: false, error: 'Network error' }
+  // API returns profile data directly at root level (not wrapped in 'data')
+  const res = await callApi<UserProfile & { success: boolean }>('get_user_profile', { user_id: userId })
+  if (res && res.success) {
+    return { success: true, data: res }
+  }
+  return { success: false, error: 'Failed to fetch profile' }
 }
 
 // FYP/Homepage Types

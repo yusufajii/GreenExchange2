@@ -10,11 +10,11 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FieldGroup, Field, FieldLabel, FieldDescription } from "@/components/ui/field"
 import { Badge } from "@/components/ui/badge"
-import { getUserProfile, updateAccount, type UserProfile } from "@/lib/api"
+import { getAccount, updateAccount, type Account } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
 
-// Preload profile data fetcher
-const profileFetcher = (key: [string, string]) => getUserProfile(key[1])
+// Preload account data fetcher
+const accountFetcher = (key: [string, string]) => getAccount(key[1])
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -23,20 +23,18 @@ export default function SettingsPage() {
   // Preload data on component mount
   useEffect(() => {
     if (userId) {
-      preload(['profile', userId], profileFetcher)
+      preload(['account', userId], accountFetcher)
     }
   }, [userId])
   
-  const { data: profileData, isLoading: isProfileLoading, mutate } = useSWR(
-    userId ? ['profile', userId] : null,
-    profileFetcher,
+  const { data: profile, isLoading: isProfileLoading, mutate } = useSWR(
+    userId ? ['account', userId] : null,
+    accountFetcher,
     { 
       revalidateOnFocus: false,
       dedupingInterval: 5000
     }
   )
-  
-  const profile = profileData?.data
   
   const [formData, setFormData] = useState({
     full_name: "",
@@ -62,7 +60,7 @@ export default function SettingsPage() {
       setFormData({
         full_name: profile.full_name || "",
         email: profile.email || "",
-        phone: profile.phone || "",
+        phone: String(profile.phone || ""),
         company_name: profile.company_name || "",
         avatar_url: profile.avatar_url || "",
       })
@@ -130,10 +128,45 @@ export default function SettingsPage() {
     }
   }
 
-  if (isProfileLoading) {
+  // Show skeleton loading state while data is being fetched
+  if (isProfileLoading || !isInitialized) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="p-4 lg:p-6 max-w-4xl mx-auto space-y-6">
+        {/* Header Skeleton */}
+        <div>
+          <div className="h-8 w-48 bg-secondary rounded animate-pulse" />
+          <div className="h-4 w-64 bg-secondary rounded animate-pulse mt-2" />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {/* Profile Summary Skeleton */}
+          <Card className="bg-card border-border md:col-span-1">
+            <CardContent className="pt-6">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 rounded-full bg-secondary animate-pulse" />
+                <div className="h-5 w-32 bg-secondary rounded animate-pulse mt-4" />
+                <div className="h-4 w-24 bg-secondary rounded animate-pulse mt-2" />
+                <div className="h-6 w-20 bg-secondary rounded animate-pulse mt-3" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Form Skeleton */}
+          <Card className="bg-card border-border md:col-span-2">
+            <CardHeader>
+              <div className="h-6 w-40 bg-secondary rounded animate-pulse" />
+              <div className="h-4 w-48 bg-secondary rounded animate-pulse mt-1" />
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="space-y-2">
+                  <div className="h-4 w-24 bg-secondary rounded animate-pulse" />
+                  <div className="h-10 w-full bg-secondary rounded animate-pulse" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     )
   }

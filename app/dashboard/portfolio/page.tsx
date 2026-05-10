@@ -11,6 +11,7 @@ import { getPortfolio, getSymbolInfo } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
 import { cn } from "@/lib/utils"
 import type { Position } from "@/lib/api"
+import { CertificationBadge } from "@/components/dashboard/certification-badge"
 
 // Position Card Component with symbol info
 function PositionCard({ 
@@ -70,7 +71,7 @@ function PositionCard({
                 <div className="flex items-center gap-2 mt-1">
                   <Badge variant="outline" className="text-xs py-0">
                     <Award className="h-3 w-3 mr-1" />
-                    {info.certification}
+                    <CertificationBadge certification={info.certification} />
                   </Badge>
                 </div>
               </>

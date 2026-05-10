@@ -9,6 +9,7 @@ import { FieldGroup, Field, FieldLabel } from "@/components/ui/field"
 import { placeBuyOrder, placeSellOrder, getSymbolInfo, getAccount, type Symbol, type TradeContext } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
 import { cn } from "@/lib/utils"
+import { CertificationBadge } from "@/components/dashboard/certification-badge"
 
 interface TradeFormProps {
   symbol: Symbol
@@ -180,7 +181,7 @@ export function TradeForm({ symbol, side, tradeContext, onOrderPlaced }: TradeFo
           <div className="space-y-1 text-xs">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Type:</span>
-              <span className="text-foreground">{info.class} - {info.certification}</span>
+              <span className="text-foreground">{info.class} - <CertificationBadge certification={info.certification} /></span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Credit Unit:</span>

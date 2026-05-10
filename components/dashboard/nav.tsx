@@ -2,10 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { TrendingUp, Briefcase, ClipboardList, PlusCircle } from "lucide-react"
+import { Home, TrendingUp, Briefcase, ClipboardList, PlusCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
+  { href: "/dashboard/fyp", label: "Home", icon: Home },
   { href: "/dashboard", label: "Market", icon: TrendingUp },
   { href: "/dashboard/portfolio", label: "Portfolio", icon: Briefcase },
   { href: "/dashboard/orders", label: "Orders", icon: ClipboardList },
@@ -20,7 +21,10 @@ export function DashboardNav() {
       {/* Desktop sidebar */}
       <nav className="hidden lg:flex w-56 border-r border-border bg-card flex-col p-4 gap-1">
         {navItems.map((item) => {
-          const isActive = pathname === item.href
+          // Special handling for Market to avoid matching /dashboard/fyp etc.
+          const isActive = item.href === "/dashboard" 
+            ? pathname === "/dashboard"
+            : pathname === item.href || pathname.startsWith(item.href + "/")
           return (
             <Link
               key={item.href}
@@ -43,7 +47,9 @@ export function DashboardNav() {
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-card z-50">
         <div className="flex items-center justify-around py-2">
           {navItems.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = item.href === "/dashboard" 
+              ? pathname === "/dashboard"
+              : pathname === item.href || pathname.startsWith(item.href + "/")
             return (
               <Link
                 key={item.href}
