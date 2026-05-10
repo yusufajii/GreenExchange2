@@ -74,8 +74,7 @@ function MessageItem({
   return (
     <div 
       className={cn(
-        "group flex items-start gap-3 p-3 border-b border-border/50 cursor-pointer transition-colors w-full overflow-hidden min-w-0" ,
-        
+        "group flex items-start gap-3 p-3 border-b border-border/50 cursor-pointer transition-colors",
         isUnread ? "bg-primary/5" : "bg-transparent",
         isNew && "animate-pulse bg-primary/10",
         "hover:bg-secondary/50"
@@ -93,40 +92,21 @@ function MessageItem({
         <Icon className="h-4 w-4" />
       </div>
       
-      <div className="flex-1 min-w-0 w-full" style={{ maxWidth: "100%" }}>
-        <div className="flex items-center gap-2 min-w-0">
-          
-        <span
-          style={{
-            display: "block",
-            maxWidth: "100%",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-          }}
-          className={isUnread ? "font-semibold text-foreground text-sm" : "text-muted-foreground text-sm"}
-        >
-          {message.subject}
-        </span>
-
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className={cn(
+            "text-sm truncate",
+            isUnread ? "font-semibold text-foreground" : "text-muted-foreground"
+          )}>
+            {message.subject}
+          </span>
           {isUnread && (
             <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
           )}
         </div>
-
-        <p
-          style={{
-            display: "block",
-            maxWidth: "100%",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-          }}
-          className="text-xs text-muted-foreground mt-0.5"
-        >
+        <p className="text-xs text-muted-foreground truncate mt-0.5">
           {message.message}
         </p>
-
         <div className="flex items-center gap-2 mt-1">
           <Badge variant="outline" className="text-[10px] px-1.5 py-0">
             {config.label}
