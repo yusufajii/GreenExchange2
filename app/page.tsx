@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const HERO_IMAGE = "/thumbnails.png"
-const BG_IMAGE = "https://images.bisnis.com/posts/2025/01/06/1829229/5_-_karbon_kredit_1_1736152074.jpg"
+const BG_IMAGE = "https://www.aprobi.or.id/wp-content/uploads/Net-Zero.jpg"
 
 function useFadeIn() {
   const ref = useRef<HTMLDivElement>(null)
@@ -58,7 +58,7 @@ function FadeIn({
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen overflow-x-hidden">
 
       {/* ── Animations ── */}
       <style>{`
@@ -74,17 +74,15 @@ export default function AboutPage() {
       `}</style>
 
       {/* ── Fixed blurred background ── */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <Image
-          src={BG_IMAGE}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-        />
+      <div
+        className="fixed inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${BG_IMAGE})`,
+        }}
+      >
         <div className="absolute inset-0 backdrop-blur-md bg-background/75" />
       </div>
-
+          
       {/* ── Navigation ── */}
       <nav className="sticky top-0 z-50 bg-background/60 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -167,7 +165,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Problems ── */}
-      <section className="py-20 px-4 bg-secondary/10 border-y border-border">
+      <section className="py-20 px-4 bg-background/40 border-y border-white/10 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="text-center mb-16">
@@ -348,7 +346,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="py-12 px-4 border-t border-border bg-secondary/10">
+      <footer className="relative z-10 py-12 px-4 border-t border-white/10 bg-background/40 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -386,7 +384,7 @@ export default function AboutPage() {
           </div>
 
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 GreenExchange. Building the future of environmental asset trading.</p>
+            <p>&copy; 2026 GreenExchange : RECs and Carbon Credit Trading Platform - Interconnecting Indonesian Green Economic Players.</p>
           </div>
         </div>
       </footer>
