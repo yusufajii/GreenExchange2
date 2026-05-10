@@ -92,21 +92,21 @@ function MessageItem({
         <Icon className="h-4 w-4" />
       </div>
       
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 w-full overflow-hidden">
         <div className="flex items-center gap-2">
-          <span
-            className={cn(
-              "text-sm font-medium block truncate",
-              isUnread ? "text-foreground" : "text-muted-foreground"
-            )}
-          >
-            {message.subject}
-          </span>
+        <span
+          className={cn(
+            "block w-full text-sm font-medium truncate",
+            isUnread ? "text-foreground" : "text-muted-foreground"
+          )}
+        >
+          {message.subject}
+        </span>
           {isUnread && (
             <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
           )}
         </div>
-        <p className="text-xs text-muted-foreground mt-0.5 block truncate">
+        <p className="block w-full text-xs text-muted-foreground mt-0.5 truncate">
           {message.message}
         </p>
         <div className="flex items-center gap-2 mt-1">
