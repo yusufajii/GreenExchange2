@@ -15,7 +15,7 @@ export default function AboutPage() {
       {/* Background Image */}
       <div className="fixed inset-0 -z-10">
         <Image
-          src="https://www.dbs.id/id/iwov-resources/images/blog/livebetter-article-2024-4-banner-1404x630.jpg"
+          src="https://images.bisnis.com/posts/2025/01/06/1829229/5_-_karbon_kredit_1_1736152074.jpg"
           alt="Background"
           fill
           className="object-cover"
