@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: 'A modern trading platform for Renewable Energy Certificates (REC) and Carbon Credits (CC)',
   generator: 'v0.app',
   icons: {
-    icon: 'https://i.ibb.co.com/Zp4XvhGC/download.png',
-    apple: 'https://i.ibb.co.com/Zp4XvhGC/download.png',
+    icon: '/logoGX.png',
+    apple: '/logoGX.png',
   },
 }
 
