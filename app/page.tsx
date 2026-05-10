@@ -116,9 +116,6 @@ export default function AboutPage() {
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                  Learn More
-                </Button>
               </div>
             </div>
           </FadeIn>
