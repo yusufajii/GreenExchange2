@@ -34,7 +34,7 @@ export function TrendingTicker({ symbols, onSymbolClick, onCertificationClick }:
         <div
           className="flex"
           style={{
-            animation: "ticker 30s linear infinite",
+            animation: "ticker 50s linear infinite",
             width: "max-content",
           }}
         >
