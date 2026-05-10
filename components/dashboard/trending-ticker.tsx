@@ -25,7 +25,7 @@ export function TrendingTicker({ symbols, onSymbolClick, onCertificationClick }:
         <span className="text-sm font-medium text-foreground">Trending Symbols</span>
       </div>
       <div className="relative overflow-hidden">
-        <div className="flex animate-ticker">
+        <div className="flex animate-ticker w-max">
           {duplicatedSymbols.map((symbol, index) => (
             <div
               key={`${symbol.symbol}-${index}`}
