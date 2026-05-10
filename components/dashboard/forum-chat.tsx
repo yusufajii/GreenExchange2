@@ -1,15 +1,14 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 import useSWR from "swr"
-import { MessageCircle, Send, User } from "lucide-react"
+import { MessageCircle, Send } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { getForum, postForum, getAccount, type ForumMessage } from "@/lib/api"
+import { getForum, postForum, type ForumMessage } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
+import { UserAvatar, UserDisplayName } from "./user-avatar"
 
 interface ForumChatProps {
   initialMessages?: ForumMessage[]
@@ -19,18 +18,14 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
   const { userId } = useAuthStore()
   const [message, setMessage] = useState("")
   const [isSending, setIsSending] = useState(false)
-  const scrollRef = useRef<HTMLDivElement>(null)
 
-  // Fetch current user's account for avatar
-  const { data: account } = useSWR(
-    userId ? ['account', userId] : null,
-    () => getAccount(userId!)
-  )
+  // FIX 1: ref ke div biasa, bukan ScrollArea
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   const { data: forumData, mutate } = useSWR(
     'forum',
     () => getForum(),
-    { 
+    {
       refreshInterval: 5000,
       fallbackData: { success: true, data: initialMessages }
     }
@@ -38,7 +33,7 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
 
   const messages = forumData?.data || initialMessages
 
-  // Scroll to bottom when messages change
+  // FIX 1: scroll ke bawah setiap messages berubah
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
@@ -51,10 +46,9 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
 
     setIsSending(true)
     const res = await postForum(userId, "General", message.trim())
-    
+
     if (res.success) {
       setMessage("")
-      // Optimistically add the message and refresh
       mutate()
     }
     setIsSending(false)
@@ -78,50 +72,55 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col min-h-0 overflow-hidden">
-        <ScrollArea className="flex-1 pr-4 min-h-0" ref={scrollRef}>
+
+        {/* FIX 1: div biasa dengan overflow-y-auto */}
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto pr-4 min-h-0"
+        >
           <div className="space-y-3 pb-2">
             {messages.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8 text-sm">No messages yet. Start the conversation!</p>
+              <p className="text-center text-muted-foreground py-8 text-sm">
+                No messages yet. Start the conversation!
+              </p>
             ) : (
-              messages.map((msg, index) => (
-                <div
-                  key={`${msg.user_id}-${msg.time}-${index}`}
-                  className={`flex gap-2 ${msg.user_id === userId ? 'flex-row-reverse' : ''}`}
-                >
-                  <div className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center flex-shrink-0 overflow-hidden relative">
-                    {msg.user_id === userId && account?.avatar_url ? (
-                      <Image
-                        src={account.avatar_url}
-                        alt="Your avatar"
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    ) : (
-                      <User className="h-3.5 w-3.5 text-muted-foreground" />
-                    )}
-                  </div>
-                  <div className={`max-w-[75%] ${msg.user_id === userId ? 'items-end' : 'items-start'}`}>
-                    <div
-                      className={`px-3 py-2 rounded-lg text-sm ${
-                        msg.user_id === userId
-                          ? 'bg-primary text-primary-foreground rounded-br-none'
-                          : 'bg-secondary text-foreground rounded-bl-none'
-                      }`}
-                    >
-                      {msg.user_id !== userId && (
-                        <p className="text-xs font-medium mb-0.5 opacity-70">{msg.user_id}</p>
-                      )}
-                      <p>{msg.chat_body}</p>
+              messages.map((msg, index) => {
+                const isSelf = msg.user_id === userId
+                return (
+                  <div
+                    key={`${msg.user_id}-${msg.time}-${index}`}
+                    className={`flex gap-2 ${isSelf ? 'flex-row-reverse' : ''}`}
+                  >
+                    {/* FIX 2: UserAvatar fetch avatar via getAccount per user_id */}
+                    <UserAvatar userId={msg.user_id} />
+
+                    <div className={`max-w-[75%] flex flex-col ${isSelf ? 'items-end' : 'items-start'}`}>
+                      <div
+                        className={`px-3 py-2 rounded-lg text-sm ${
+                          isSelf
+                            ? 'bg-primary text-primary-foreground rounded-br-none'
+                            : 'bg-secondary text-foreground rounded-bl-none'
+                        }`}
+                      >
+                        {/* FIX 2: Tampilkan full_name, bukan raw user_id */}
+                        {!isSelf && (
+                          <p className="text-xs font-medium mb-0.5 opacity-70">
+                            <UserDisplayName userId={msg.user_id} />
+                          </p>
+                        )}
+                        <p>{msg.chat_body}</p>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-0.5 px-1">
+                        {formatTime(msg.time)}
+                      </p>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5 px-1">{formatTime(msg.time)}</p>
                   </div>
-                </div>
-              ))
+                )
+              })
             )}
           </div>
-        </ScrollArea>
-        
+        </div>
+
         <form onSubmit={handleSend} className="flex gap-2 mt-3 pt-3 border-t border-border flex-shrink-0">
           <Input
             value={message}
@@ -130,8 +129,8 @@ export function ForumChat({ initialMessages = [] }: ForumChatProps) {
             className="flex-1 bg-input border-border"
             disabled={isSending || !userId}
           />
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             size="icon"
             disabled={isSending || !message.trim() || !userId}
             className="bg-primary text-primary-foreground hover:bg-primary/90"
