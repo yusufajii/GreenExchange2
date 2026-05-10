@@ -104,10 +104,9 @@ className={className}
 }
 
 export default function AboutPage() {
-return (
+return ( <div className="relative min-h-screen overflow-hidden bg-background">
 
-
-
+```
   {/* Background */}
   <div
     className="fixed inset-0 bg-cover bg-center scale-105"
@@ -469,6 +468,5 @@ return (
     </div>
   </footer>
 </div>
-
 )
 }
