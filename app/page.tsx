@@ -7,11 +7,11 @@ import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const HERO_IMAGE = "/thumbnail.png"
+const HERO_IMAGE = "/thumbnails.png"
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen relative">
       {/* Background Image */}
       <div className="fixed inset-0 -z-10">
         <Image
@@ -25,7 +25,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
       </div>
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <nav className="sticky top-0 z-50 bg-background/60 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <Logo size="md" />
           <Link href="/login">
@@ -101,7 +101,7 @@ export default function AboutPage() {
       </section>
 
       {/* Problems Section */}
-      <section className="py-20 px-4 bg-secondary/30 border-y border-border">
+      <section className="py-20 px-4 bg-secondary/10 border-y border-border">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Permasalahan Pasar Saat Ini</h2>
@@ -212,7 +212,7 @@ export default function AboutPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-secondary/20 border-y border-border">
+      <section className="py-20 px-4 bg-secondary/10 border-y border-border">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Fitur Platform</h2>
@@ -322,7 +322,7 @@ export default function AboutPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-border bg-secondary/20">
+      <footer className="py-12 px-4 border-t border-border bg-secondary/10">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
