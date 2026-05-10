@@ -165,7 +165,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Problems ── */}
-      <section className="py-20 px-4 bg-secondary/10 border-y border-border">
+      <section className="py-20 px-4 bg-background/40 border-y border-white/10 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="text-center mb-16">
@@ -346,7 +346,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="relative z-10 py-12 px-4 border-t border-border bg-secondary/10">
+      <footer className="relative z-10 py-12 px-4 border-t border-white/10 bg-background/40 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -384,7 +384,7 @@ export default function AboutPage() {
           </div>
 
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 GreenExchange. Building the future of environmental asset trading.</p>
+            <p>&copy; 2026 GreenExchange : RECs and Carbon Credit Trading Platform - Interconnecting Indonesian Green Economic Players.</p>
           </div>
         </div>
       </footer>
