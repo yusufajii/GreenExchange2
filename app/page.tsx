@@ -7,7 +7,7 @@ import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const HERO_IMAGE = "https://awsimages.detik.net.id/community/media/visual/2022/12/24/ilustrasi-green-economy_169.jpeg?w=600&q=90"
+const HERO_IMAGE = "/thumbnail.png"
 
 export default function AboutPage() {
   return (
