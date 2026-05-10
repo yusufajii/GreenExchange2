@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Loader2, User, Mail, Phone, Building2, Lock, Eye, EyeOff } from "lucide-react"
+import Image from "next/image"
+import { Loader2, User, Mail, Phone, Building2, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,6 +15,9 @@ import { useAuthStore } from "@/lib/auth-store"
 import { signInWithPopup } from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase"
 
+const BACKGROUND_IMAGE =
+  "https://static.independent.co.uk/2022/04/06/10/solar%20panel%20night%20electricity.jpg?width=1200&height=800&crop=1200:800"
+  
 export default function RegisterPage() {
   const router = useRouter()
   const loginStore = useAuthStore((state) => state.login)
@@ -138,8 +142,41 @@ const handleGoogleLogin = async () => {
 }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 py-8">
-      <Card className="w-full max-w-lg bg-card border-border">
+    <div className="min-h-screen flex items-center justify-center p-4 py-8 relative overflow-hidden">
+
+      {/* Back Button */}
+      <Link
+        href="/login"
+        className="absolute top-4 left-4 z-20 p-2 rounded-lg hover:bg-background/20 transition-colors"
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-primary-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          <span className="sr-only">Back to Login</span>
+        </Button>
+      </Link>
+
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={BACKGROUND_IMAGE}
+          alt="Solar panels at night"
+          fill
+          className="object-cover"
+          priority
+          unoptimized
+        />
+
+        {/* Dark blur overlay */}
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-md" />
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
+      </div>
+      <Card className="w-full max-w-lg bg-card/95 border-border backdrop-blur-sm relative z-10 shadow-2xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
             <Logo size="lg" showText={false} />
