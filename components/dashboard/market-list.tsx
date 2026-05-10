@@ -68,15 +68,15 @@ export function MarketList({
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="relative p-2 rounded-lg bg-secondary overflow-hidden w-10 h-10 flex items-center justify-center">
+              <div className="relative rounded-full bg-white overflow-hidden w-10 h-10 flex items-center justify-center border border-border flex-shrink-0">
                 {logoUrl ? (
-                  <Image
-                    src={logoUrl}
-                    alt={symbol.name}
-                    fill
-                    className="object-cover"
-                    sizes="40px"
-                  />
+                <Image
+                  src={logoUrl}
+                  alt={symbol.name}
+                  fill
+                  className="object-cover"
+                  sizes="40px"
+                />
                 ) : (
                   getSymbolIcon(symbol.symbol)
                 )}

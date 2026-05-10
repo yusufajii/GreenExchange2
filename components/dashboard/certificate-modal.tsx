@@ -45,13 +45,13 @@ export function CertificateModal({ certificationName, open, onOpenChange }: Cert
           <div className="space-y-4">
             {/* Header with Logo and Name */}
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-lg bg-secondary flex items-center justify-center overflow-hidden relative flex-shrink-0">
+              <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden relative flex-shrink-0 border border-border">
                 {certificate.certificate_logo_url ? (
                   <Image
                     src={certificate.certificate_logo_url}
                     alt={certificate.certificate_name}
                     fill
-                    className="object-contain p-2"
+                    className="object-cover"
                     unoptimized
                   />
                 ) : (
