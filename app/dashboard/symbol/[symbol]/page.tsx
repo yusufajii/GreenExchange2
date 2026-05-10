@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getSymbolInfo, type SymbolInfo } from "@/lib/api"
 import { cn } from "@/lib/utils"
+import { CertificationBadge } from "@/components/dashboard/certification-badge"
 
 interface SymbolPageProps {
   params: Promise<{ symbol: string }>
@@ -176,7 +177,7 @@ export default function SymbolPage({ params }: SymbolPageProps) {
               <span className="text-sm text-muted-foreground">Commissioned</span>
               <span className="text-sm font-medium text-foreground flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
-                {info.commissioned_year}
+                {info.commissioned_year} 
               </span>
             </div>
           </CardContent>
@@ -193,7 +194,9 @@ export default function SymbolPage({ params }: SymbolPageProps) {
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Standard</span>
-              <Badge variant="outline">{info.certification}</Badge>
+              <Badge variant="outline">
+                <CertificationBadge certification={info.certification} />
+              </Badge>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Issuer</span>
