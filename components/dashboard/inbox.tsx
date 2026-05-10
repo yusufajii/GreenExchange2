@@ -98,6 +98,7 @@ function MessageItem({
             "text-sm truncate",
             isUnread ? "font-semibold text-foreground" : "text-muted-foreground"
           )}>
+            {truncateText(message.subject, 40)}
             {message.subject}
           </span>
           {isUnread && (
@@ -105,6 +106,7 @@ function MessageItem({
           )}
         </div>
         <p className="text-xs text-muted-foreground truncate mt-0.5">
+          {truncateText(message.message, 60)}
           {message.message}
         </p>
         <div className="flex items-center gap-2 mt-1">
@@ -393,4 +395,9 @@ export function InboxButton() {
       </PopoverContent>
     </Popover>
   )
+}
+function truncateText(text: string, maxLength: number) {
+  if (!text) return ""
+  if (text.length <= maxLength) return text
+  return text.slice(0, maxLength - 3) + "..."
 }
