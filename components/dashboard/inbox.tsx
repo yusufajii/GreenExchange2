@@ -74,7 +74,7 @@ function MessageItem({
   return (
     <div 
       className={cn(
-        "group flex items-start gap-3 p-3 border-b border-border/50 cursor-pointer transition-colors",
+        "group flex items-start gap-3 p-3 border-b border-border/50 cursor-pointer transition-colors w-full overflow-hidden",
         isUnread ? "bg-primary/5" : "bg-transparent",
         isNew && "animate-pulse bg-primary/10",
         "hover:bg-secondary/50"
