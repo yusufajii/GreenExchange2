@@ -32,7 +32,7 @@ export default function LoginPage() {
     
     if (res.success && res.user_id) {
       loginStore(res.user_id)
-      router.push("/dashboard")
+      router.push("/dashboard/fyp")
     } else {
       setError("Invalid username or password")
     }
