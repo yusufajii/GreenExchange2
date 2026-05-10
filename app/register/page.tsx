@@ -11,6 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FieldGroup, Field, FieldLabel, FieldDescription } from "@/components/ui/field"
 import { createAccount, googleLogin } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
+import { signInWithPopup } from "firebase/auth"
+import { auth, googleProvider } from "@/lib/firebase"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -104,29 +106,23 @@ export default function RegisterPage() {
     setIsLoading(false)
   }
 
-  const handleGoogleLogin = async () => {
-    setIsGoogleLoading(true)
-    setError("")
-    
-    // Simulate Google OAuth flow - in production, integrate with Google OAuth
-    // For demo, we'll show a message
-    try {
-      // This would be replaced with actual Google OAuth
-      // const googleUser = await signInWithGoogle()
-      // const res = await googleLogin({
-      //   google_id: googleUser.id,
-      //   email: googleUser.email,
-      //   full_name: googleUser.name,
-      //   avatar_url: googleUser.picture,
-      // })
-      
-      setError("Google OAuth integration requires configuration. Please use email registration.")
-    } catch {
-      setError("Google login failed. Please try again.")
-    }
-    
-    setIsGoogleLoading(false)
+const handleGoogleLogin = async () => {
+  setIsGoogleLoading(true)
+  setError("")
+
+  try {
+    const result = await signInWithPopup(auth, googleProvider)
+
+    console.log(result.user)
+
+    setError("Google login success!")
+  } catch (err: any) {
+    console.error(err)
+    setError(err.message || "Google login failed")
   }
+
+  setIsGoogleLoading(false)
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 py-8">

@@ -102,7 +102,7 @@ export default function AboutPage() {
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
                 <Sparkles className="h-4 w-4 text-primary" />
-                <span className="text-sm text-primary font-medium">Open Environmental Asset Marketplace</span>
+                <span className="text-sm text-primary font-medium">GreenExchange : RECs and Carbon Credit Marketplace</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
                 Modern Trading Platform for Environmental Assets
@@ -116,9 +116,6 @@ export default function AboutPage() {
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                  Learn More
-                </Button>
               </div>
             </div>
           </FadeIn>
