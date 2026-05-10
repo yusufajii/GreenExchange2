@@ -113,9 +113,22 @@ const handleGoogleLogin = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider)
 
-    console.log(result.user)
+    const user = result.user
 
-    setError("Google login success!")
+    const res = await googleLogin({
+      google_id: user.uid,
+      email: user.email || "",
+      full_name: user.displayName || "",
+      avatar_url: user.photoURL || "",
+    })
+
+    if (res.success && res.user_id) {
+      loginStore(res.user_id)
+      router.push("/dashboard/fyp")
+    } else {
+      setError(res.error || "Failed to login with Google")
+    }
+
   } catch (err: any) {
     console.error(err)
     setError(err.message || "Google login failed")
