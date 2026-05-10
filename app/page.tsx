@@ -82,7 +82,7 @@ export default function AboutPage() {
       >
         <div className="absolute inset-0 backdrop-blur-md bg-background/75" />
       </div>
-      <div className="relative z-10"></div>    
+          
       {/* ── Navigation ── */}
       <nav className="sticky top-0 z-50 bg-background/60 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -346,7 +346,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="py-12 px-4 border-t border-border bg-secondary/10">
+      <footer className="relative z-10 py-12 px-4 border-t border-border bg-secondary/10">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
