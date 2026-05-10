@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const HERO_IMAGE = "/thumbnails.png"
-const BG_IMAGE = "/thumbnails.png"
+const BG_IMAGE = "https://images.bisnis.com/posts/2025/01/06/1829229/5_-_karbon_kredit_1_1736152074.jpg"
 
 function useFadeIn() {
   const ref = useRef<HTMLDivElement>(null)
@@ -58,7 +58,7 @@ function FadeIn({
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative z-10 min-h-screen bg-transparent">
 
       {/* ── Animations ── */}
       <style>{`
@@ -74,14 +74,12 @@ export default function AboutPage() {
       `}</style>
 
       {/* ── Fixed blurred background ── */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <Image
-          src={BG_IMAGE}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-        />
+      <div
+        className="fixed inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${BG_IMAGE})`,
+        }}
+      >
         <div className="absolute inset-0 backdrop-blur-md bg-background/75" />
       </div>
 
