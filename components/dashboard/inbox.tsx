@@ -94,17 +94,19 @@ function MessageItem({
       
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className={cn(
-            "text-sm truncate",
-            isUnread ? "font-semibold text-foreground" : "text-muted-foreground"
-          )}>
+          <span
+            className={cn(
+              "text-sm font-medium block truncate",
+              isUnread ? "text-foreground" : "text-muted-foreground"
+            )}
+          >
             {message.subject}
           </span>
           {isUnread && (
             <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
           )}
         </div>
-        <p className="text-xs text-muted-foreground truncate mt-0.5">
+        <p className="text-xs text-muted-foreground mt-0.5 block truncate">
           {message.message}
         </p>
         <div className="flex items-center gap-2 mt-1">
