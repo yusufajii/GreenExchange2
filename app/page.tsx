@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const HERO_IMAGE = "/thumbnails.png"
-const BG_IMAGE = "https://images.bisnis.com/posts/2025/01/06/1829229/5_-_karbon_kredit_1_1736152074.jpg"
+const BG_IMAGE = "https://www.aprobi.or.id/wp-content/uploads/Net-Zero.jpg"
 
 function useFadeIn() {
   const ref = useRef<HTMLDivElement>(null)
