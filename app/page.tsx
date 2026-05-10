@@ -58,7 +58,7 @@ function FadeIn({
 
 export default function AboutPage() {
   return (
-    <div className="relative z-10 min-h-screen bg-transparent">
+    <div className="relative min-h-screen overflow-x-hidden">
 
       {/* ── Animations ── */}
       <style>{`
@@ -82,7 +82,7 @@ export default function AboutPage() {
       >
         <div className="absolute inset-0 backdrop-blur-md bg-background/75" />
       </div>
-
+      <div className="relative z-10"></div>    
       {/* ── Navigation ── */}
       <nav className="sticky top-0 z-50 bg-background/60 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
